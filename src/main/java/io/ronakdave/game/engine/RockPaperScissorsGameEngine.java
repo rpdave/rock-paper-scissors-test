@@ -41,5 +41,11 @@ public class RockPaperScissorsGameEngine {
 
         return GameResult.WIN;
     }
+
+    public GameResult runEngine(Shape playerShape) {
+        // Generate a shape for the computer
+        Shape computerShape = generateShape();
+        return evaluate(playerShape, computerShape);
+    }
     
 }

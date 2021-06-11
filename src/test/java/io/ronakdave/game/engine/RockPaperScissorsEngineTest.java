@@ -82,4 +82,12 @@ public class RockPaperScissorsEngineTest {
         assertTrue(result instanceof GameResult);
         assertTrue(result == GameResult.WIN);
     }
+
+    @Test
+    public void whenRunGameEngineWithValidInput_thenProductValidResult() {
+        GameResult result = gameEngine.runEngine(Shape.ROCK);
+
+        assertNotNull(result);
+        assertTrue(result instanceof GameResult);
+    }
 }

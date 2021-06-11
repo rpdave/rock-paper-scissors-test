@@ -2,6 +2,7 @@ package io.ronakdave.game.engine;
 
 import java.util.Random;
 
+import io.ronakdave.game.model.GameResult;
 import io.ronakdave.game.model.Shape;
 
 public class RockPaperScissorsGameEngine {
@@ -20,6 +21,25 @@ public class RockPaperScissorsGameEngine {
         } else 
             // 6,7,8
             return Shape.SCISSORS;
+    }
+
+    protected GameResult evaluate(Shape playerShape, Shape computerShape) {
+        if(playerShape == computerShape)
+            return GameResult.DRAW;
+
+        if(playerShape == Shape.ROCK && computerShape == Shape.PAPER) {
+            return GameResult.LOSS;
+        }
+
+        if(playerShape == Shape.PAPER && computerShape == Shape.SCISSORS) {
+            return GameResult.LOSS;
+        }
+
+        if(playerShape == Shape.SCISSORS && computerShape == Shape.ROCK) {
+            return GameResult.LOSS;
+        }
+
+        return GameResult.WIN;
     }
     
 }

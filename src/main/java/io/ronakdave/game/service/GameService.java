@@ -16,20 +16,44 @@ public class GameService {
     private final PlayerRepository playerRepository;
 
     public GameResultSummary playRound(Shape playerShape, Long playerId) throws NoSuchElementException {
-        // Pass shape to engine
-        // get result
         GameResult result = gameEngine.runEngine(playerShape);
-        // Get the player from repository
+        
         Player currentPlayer = playerRepository.findById(playerId).orElseThrow();
-        // calc player win, loss, played metrics
-        // create result object
-        // return result
+
+        int totalPlayed = currentPlayer.getTotalPlayed();
+        int won = currentPlayer.getWon();
+        int lost = currentPlayer.getLost();
+        int draw = currentPlayer.getDraw();
+
+        totalPlayed += 1;
+        currentPlayer.setTotalPlayed(totalPlayed);
+        
+        switch (result) {
+            case WIN:
+                won += 1;
+                break;
+            case LOSS:
+                lost += 1;
+                break;
+            case DRAW:
+                draw += 1;
+                break;
+        }
+
+        currentPlayer.setTotalPlayed(totalPlayed);
+        currentPlayer.setLost(lost);
+        currentPlayer.setDraw(draw);
+        currentPlayer.setWon(won);
+
+        currentPlayer = playerRepository.save(currentPlayer);
+
         return GameResultSummary.builder()
             .result(result)
             .player(currentPlayer)
-            .lossCount(currentPlayer.getLost())
-            .totalCount(currentPlayer.getTotalPlayed())
-            .wonCount(currentPlayer.getWon())
+            .played(totalPlayed)
+            .won(won)
+            .lost(lost)
+            .draw(draw)
             .build();
     }
 

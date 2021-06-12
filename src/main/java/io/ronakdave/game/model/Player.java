@@ -21,7 +21,8 @@ public class Player {
     private String name;
     
     // Player Stats
-    private Integer totalPlayed;
-    private Integer won;
-    private Integer lost;
+    private int totalPlayed;
+    private int won;
+    private int lost;
+    private int draw;
 }

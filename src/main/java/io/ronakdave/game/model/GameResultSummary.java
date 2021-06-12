@@ -8,7 +8,8 @@ import lombok.Data;
 public class GameResultSummary {
     private Player player;
     private GameResult result;
-    private Integer wonCount;
-    private Integer lossCount;
-    private Integer totalCount;
+    private int played;
+    private int won;
+    private int lost;
+    private int draw;
 }

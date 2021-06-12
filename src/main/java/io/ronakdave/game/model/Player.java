@@ -6,11 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "players")
 @Data
+@Builder
 public class Player {
 
     @Id
@@ -22,6 +24,4 @@ public class Player {
     private Integer totalPlayed;
     private Integer won;
     private Integer lost;
-    private Double winPercent;
-    private Double lossPercent;
 }

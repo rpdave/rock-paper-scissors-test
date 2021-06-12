@@ -9,7 +9,7 @@ import io.ronakdave.game.model.GameResult;
 import io.ronakdave.game.model.GameResultSummary;
 import io.ronakdave.game.model.Player;
 import io.ronakdave.game.model.Shape;
-import io.ronakdave.game.repositories.PlayerRepository;
+import io.ronakdave.game.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -35,7 +35,7 @@ public class GameServiceTest {
     private static Player mPlayer;
     @BeforeAll
     public static void setup() {
-        mPlayer = Player.builder().id(1L).name("test").totalPlayed(0).lost(0).won(0).build();
+        mPlayer = Player.builder().id(1L).username("test").totalPlayed(0).lost(0).won(0).build();
     }
 
     @Test
@@ -59,7 +59,7 @@ public class GameServiceTest {
         when(playerRepository.findById(mPlayer.getId())).thenReturn(
             Optional.of(
                 Player.builder()
-                    .name("test")
+                    .username("test")
                     .totalPlayed(0)
                     .lost(0)
                     .won(0)
@@ -82,7 +82,7 @@ public class GameServiceTest {
         when(playerRepository.findById(mPlayer.getId())).thenReturn(
             Optional.of(
                 Player.builder()
-                    .name("test")
+                    .username("test")
                     .totalPlayed(0)
                     .lost(0)
                     .won(0)
@@ -106,7 +106,7 @@ public class GameServiceTest {
         when(playerRepository.findById(mPlayer.getId())).thenReturn(
             Optional.of(
                 Player.builder()
-                    .name("test")
+                    .username("test")
                     .totalPlayed(0)
                     .lost(0)
                     .won(0)

@@ -27,6 +27,9 @@ public class GameService {
         return GameResultSummary.builder()
             .result(result)
             .player(currentPlayer)
+            .lossCount(currentPlayer.getLost())
+            .totalCount(currentPlayer.getTotalPlayed())
+            .wonCount(currentPlayer.getWon())
             .build();
     }
 

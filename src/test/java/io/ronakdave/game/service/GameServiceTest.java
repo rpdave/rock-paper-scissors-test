@@ -50,13 +50,16 @@ public class GameServiceTest {
     @Test
     public void whenGameServiceSubmitRound_thenRunEngineToProduceValidResult() {
         GameResultSummary summary = gameService.playRound(Shape.ROCK, 1L);
-
         // summary should not be null
         assertNotNull(summary);
         // result should not be null
         assertNotNull(summary.getResult());
         // Player should not be null
         assertNotNull(summary.getPlayer());
+        // Any number should not be null
+        assertNotNull(summary.getLossCount());
+        assertNotNull(summary.getWonCount());
+        assertNotNull(summary.getTotalCount());
     }
     
 }

@@ -2,6 +2,8 @@ package io.ronakdave.game.service;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.stereotype.Service;
+
 import io.ronakdave.game.engine.RockPaperScissorsGameEngine;
 import io.ronakdave.game.model.GameResult;
 import io.ronakdave.game.model.GameResultSummary;
@@ -11,6 +13,7 @@ import io.ronakdave.game.repositories.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Service
 public class GameService {
     private final RockPaperScissorsGameEngine gameEngine;
     private final PlayerRepository playerRepository;

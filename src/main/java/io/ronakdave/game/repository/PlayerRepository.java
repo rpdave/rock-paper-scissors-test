@@ -1,4 +1,4 @@
-package io.ronakdave.game.repositories;
+package io.ronakdave.game.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

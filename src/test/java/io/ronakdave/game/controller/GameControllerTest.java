@@ -1,7 +1,36 @@
 package io.ronakdave.game.controller;
 
-import org.junit.jupiter.api.Test;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import io.ronakdave.game.service.GameService;
+
+@WebMvcTest(GameController.class)
 public class GameControllerTest {
-    
+
+    @Autowired
+    private MockMvc mvc;
+
+    @MockBean
+    private GameService gameService;
+
+    @Test 
+    public void whenStartGame_thenResponseIsOk() throws Exception {
+        mvc
+            .perform(get("/startGame").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("game started")));
+    }
+
 }

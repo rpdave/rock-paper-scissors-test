@@ -13,16 +13,16 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
 
-    public boolean savePlayer(UserAuthRequest userDetails) {
+    public void savePlayer(UserAuthRequest userDetails) {
 
         Player newPlayer = Player.builder()
             .username(userDetails.getUsername())
+            // Encode this password
             .password(userDetails.getPassword())
             .build();
         
         playerRepository.save(newPlayer);
 
-        return true;
     }
 
     public boolean usernameTaken(String username) {

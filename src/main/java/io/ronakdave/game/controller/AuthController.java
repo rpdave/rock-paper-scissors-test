@@ -24,12 +24,19 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signupUser(@RequestBody UserAuthRequest userDetails) {
-        
-        if(playerService.usernameTaken(userDetails.getUsername()))
-            return ResponseEntity.badRequest().body(new AuthResponse("Username is already taken, please try another one"));
 
-        if(playerService.savePlayer(userDetails))
+        try {
+            if (playerService.usernameTaken(userDetails.getUsername()))
+                return ResponseEntity.badRequest()
+                        .body(new AuthResponse("Username is already taken, please try another one"));
+
+            playerService.savePlayer(userDetails);
+            
             return ResponseEntity.ok(new AuthResponse("User saved!"));
-  
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new AuthResponse("User could not be saved"));
+        }
+
     }
 }

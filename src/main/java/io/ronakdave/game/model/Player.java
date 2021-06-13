@@ -20,6 +20,7 @@ public class Player {
     private Long id;
     private String username;
     private String password;
+    private String roles;
     
     // Player Stats
     private int totalPlayed;

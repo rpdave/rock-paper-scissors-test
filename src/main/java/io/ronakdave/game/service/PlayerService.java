@@ -1,5 +1,7 @@
 package io.ronakdave.game.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import io.ronakdave.game.model.Player;
@@ -27,5 +29,9 @@ public class PlayerService {
 
     public boolean usernameTaken(String username) {
         return playerRepository.existsByUsername(username);
+    }
+
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
     }
 }

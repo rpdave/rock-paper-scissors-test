@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class GameService {
-    private final RockPaperScissorsGameEngine gameEngine;
+    private final RockPaperScissorsGameEngine gameEngine = new RockPaperScissorsGameEngine();
     private final PlayerRepository playerRepository;
 
     public GameResultSummary playRound(Shape playerShape, Long playerId) throws NoSuchElementException {

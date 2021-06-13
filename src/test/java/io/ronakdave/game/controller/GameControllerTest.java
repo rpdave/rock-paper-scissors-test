@@ -25,15 +25,6 @@ public class GameControllerTest {
     @MockBean
     private GameService gameService;
 
-    @Test 
-    public void whenStartGame_thenResponseIsOk() throws Exception {
-        mvc
-            .perform(get("/startGame").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(content().string(containsString("game started")));
-    }
-
     @Test
     public void whenPlayerIdIsInvalid_thenReturnBadRequest() throws Exception {
         mvc

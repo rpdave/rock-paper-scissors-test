@@ -25,17 +25,22 @@ public class GameController {
         return ResponseEntity.ok(new GameApiResponse("game started"));
     }
 
-    @PostMapping("submit/{playerId}/{playerShape}")
-    public ResponseEntity<GameResultResponse> submit(@PathVariable("playerId") Long playerId, @PathVariable("playerShape") Shape playerShape) {
+    @PostMapping("/submit/{playerId}/{playerShape}")
+    public ResponseEntity<GameResultResponse> submit(@PathVariable("playerId") int playerId, @PathVariable("playerShape") String playerShape) {
 
         try {
-            Assert.isTrue(playerId > 0, "PlayerId cannot be 0 or less");
-            Assert.notNull(playerShape, "Submit a valid player shape, Rock/Paper/Scissor");
-        } catch (Exception e) {
+            Assert.isTrue(playerId > 0, "Invalid player id");
+            Assert.notNull(playerShape, "Submit a player shape");
+            Assert.isTrue(Shape.valueOf(playerShape) != null, "Submit a valid player shape");
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new GameResultResponse("Invalid shape provided"));
+        }
+         catch (Exception e) {
             return ResponseEntity.badRequest().body(new GameResultResponse(e.getMessage()));
         }
 
-        GameResultSummary summary = gameService.playRound(playerShape, playerId);
+        GameResultSummary summary = gameService.playRound(Shape.valueOf(playerShape), Long.valueOf(playerId));
 
         return  ResponseEntity.ok(new GameResultResponse(summary));
     }

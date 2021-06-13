@@ -1,7 +1,9 @@
 package io.ronakdave.game.response;
 
 import io.ronakdave.game.model.GameResultSummary;
+import lombok.Data;
 
+@Data
 public class GameResultResponse {
     private GameResultSummary summary;
     private String message;

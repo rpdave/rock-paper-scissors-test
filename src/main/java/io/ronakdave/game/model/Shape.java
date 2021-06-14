@@ -6,6 +6,10 @@ public enum Shape {
     SCISSORS;
 
     public static Shape getShape(String shape) {
-        return Shape.valueOf(shape.toUpperCase());
+        try {
+            return Shape.valueOf(shape.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid shape: " + shape);
+        }
     }
 }

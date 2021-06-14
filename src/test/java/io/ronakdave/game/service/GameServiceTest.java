@@ -2,7 +2,6 @@ package io.ronakdave.game.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -14,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import io.ronakdave.game.engine.RockPaperScissorsGameEngine;
 import io.ronakdave.game.model.GameResult;
 import io.ronakdave.game.model.GameResultSummary;
 import io.ronakdave.game.model.Player;

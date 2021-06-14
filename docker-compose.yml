@@ -8,8 +8,8 @@ services:
             - 8085:8080
     db:
         image: mysql:5.7
-        expose: 
-            - "3306"
+        ports: 
+            - "3306:3306"
         environment: 
             MYSQL_ROOT_PASSWORD: kkLVpKKy5
             MYSQL_DATABASE: game

@@ -2,6 +2,7 @@ package io.ronakdave.game.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -24,9 +25,6 @@ import io.ronakdave.game.repository.PlayerRepository;
 public class GameServiceTest {
 
     @Mock
-    private RockPaperScissorsGameEngine gameEngine;
-
-    @Mock
     private PlayerRepository playerRepository;
 
     @InjectMocks
@@ -35,16 +33,15 @@ public class GameServiceTest {
     private static Player mPlayer;
     @BeforeAll
     public static void setup() {
-        mPlayer = Player.builder().id(1L).username("test").totalPlayed(0).lost(0).won(0).build();
+        mPlayer = Player.builder().id(1L).username("test").gamesPlayed(0).gamesLost(0).gamesWon(0).gamesDraw(0).build();
     }
 
     @Test
     public void whenGameServiceSubmitRound_thenRunEngineToProduceValidResult() {
-        when(gameEngine.runEngine(Shape.ROCK)).thenReturn(GameResult.WIN);
-        when(playerRepository.findById(mPlayer.getId())).thenReturn(Optional.of(mPlayer));
+        when(playerRepository.findByUsername(mPlayer.getUsername())).thenReturn(Optional.of(mPlayer));
         when(playerRepository.save(mPlayer)).thenReturn(mPlayer);
 
-        GameResultSummary summary = gameService.playRound(Shape.ROCK, 1L);
+        GameResultSummary summary = gameService.playRound(Shape.ROCK, "test");
         // summary should not be null
         assertNotNull(summary);
         // result should not be null
@@ -55,72 +52,25 @@ public class GameServiceTest {
 
     @Test
     public void givenUserWithZeroRounds_whenGameServiceSubmitRoundWinResult_thenIncrementTotalCountAndWonCount() {
-        when(gameEngine.runEngine(Shape.ROCK)).thenReturn(GameResult.WIN);
-        when(playerRepository.findById(mPlayer.getId())).thenReturn(
-            Optional.of(
-                Player.builder()
-                    .username("test")
-                    .totalPlayed(0)
-                    .lost(0)
-                    .won(0)
-                    .draw(0)
-                    .build()
-            )
-        );
+        when(playerRepository.findByUsername(mPlayer.getUsername())).thenReturn(Optional.of(mPlayer));
+        when(playerRepository.save(mPlayer)).thenReturn(mPlayer);
 
-        GameResultSummary summary = gameService.playRound(Shape.ROCK, mPlayer.getId());
+        GameResultSummary summary = gameService.playRound(Shape.ROCK, mPlayer.getUsername());
 
-        assertTrue(summary.getPlayed() == 1);
-        assertTrue(summary.getWon() == 1);
-        assertTrue(summary.getDraw() == 0);
-        assertTrue(summary.getLost() == 0);
-    }
+        assertNotNull(summary);
+        assertNotNull(summary.getResult());
+        assertNotNull(summary.getPlayer());
 
-    @Test
-    public void givenUserWithZeroGamesPlayed_whenGameServiceSubmitRoundLossResult_thenIncrementTotalCountAndLossCount() {
-        when(gameEngine.runEngine(Shape.ROCK)).thenReturn(GameResult.LOSS);
-        when(playerRepository.findById(mPlayer.getId())).thenReturn(
-            Optional.of(
-                Player.builder()
-                    .username("test")
-                    .totalPlayed(0)
-                    .lost(0)
-                    .won(0)
-                    .draw(0)
-                    .build()
-            )
-        );
+        if(summary.getResult() == GameResult.WIN)
+            assertTrue(summary.getWon() > 0);
 
-        GameResultSummary summary = gameService.playRound(Shape.ROCK, mPlayer.getId());
+        if(summary.getResult() == GameResult.LOSS) 
+            assertTrue(summary.getLost() > 0);
+        
+        if(summary.getResult() == GameResult.DRAW)
+            assertTrue(summary.getDraw() > 0);
 
-        assertTrue(summary.getPlayed() == 1);
-        assertTrue(summary.getLost() == 1);
-        assertTrue(summary.getWon() == 0);
-        assertTrue(summary.getDraw() == 0);
-
-    }
-
-    @Test
-    public void givenUserWithZeroGamesPlayed_whenGameServiceSubmitRoundDrawResult_thenIncrementTotalCountAndDrawCount() {
-        when(gameEngine.runEngine(Shape.ROCK)).thenReturn(GameResult.DRAW);
-        when(playerRepository.findById(mPlayer.getId())).thenReturn(
-            Optional.of(
-                Player.builder()
-                    .username("test")
-                    .totalPlayed(0)
-                    .lost(0)
-                    .won(0)
-                    .draw(0)
-                    .build()
-            )
-        );
-
-        GameResultSummary summary = gameService.playRound(Shape.ROCK, mPlayer.getId());
-
-        assertTrue(summary.getPlayed() == 1);
-        assertTrue(summary.getDraw() == 1);
-        assertTrue(summary.getWon() == 0);
-        assertTrue(summary.getLost() == 0);
+        assertTrue(summary.getPlayed() > 0);
     }
     
 }

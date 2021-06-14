@@ -2,6 +2,7 @@ package io.ronakdave.game.service;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import io.ronakdave.game.engine.RockPaperScissorsGameEngine;
@@ -18,10 +19,10 @@ public class GameService {
     private final RockPaperScissorsGameEngine gameEngine = new RockPaperScissorsGameEngine();
     private final PlayerRepository playerRepository;
 
-    public GameResultSummary playRound(Shape playerShape, String username) throws NoSuchElementException {
+    public GameResultSummary playRound(Shape playerShape, String username) {
         GameResult result = gameEngine.runEngine(playerShape);
         
-        Player currentPlayer = playerRepository.findByUsername(username).orElseThrow();
+        Player currentPlayer = playerRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
 
         int totalPlayed = currentPlayer.getGamesPlayed();
         int won = currentPlayer.getGamesWon();

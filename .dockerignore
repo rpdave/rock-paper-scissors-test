@@ -1,0 +1,11 @@
+/src
+.pom.xml
+/.git
+/.gradle
+/.vscode
+/gradle
+
+/.settings
+.classpath
+.project
+.springBeans

@@ -42,10 +42,12 @@ public class RockPaperScissorsGameEngine {
         return GameResult.WIN;
     }
 
-    public GameResult runEngine(Shape playerShape) {
-        // Generate a shape for the computer
+    public GameEngineOutcome runEngine(Shape playerShape) {
         Shape computerShape = generateShape();
-        return evaluate(playerShape, computerShape);
+        return GameEngineOutcome.builder()
+            .generatedShape(computerShape)
+            .result(evaluate(playerShape, computerShape))
+            .build();
     }
     
 }

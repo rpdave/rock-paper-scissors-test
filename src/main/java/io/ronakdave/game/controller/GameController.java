@@ -32,8 +32,6 @@ public class GameController {
             return ResponseEntity.badRequest().body(new GameResultResponse(e.getMessage()));
         }
 
-
-
         GameResultSummary summary = gameService.playRound(Shape.getShape(playerShape), authentication.getName());
 
         return  ResponseEntity.ok(new GameResultResponse(summary));

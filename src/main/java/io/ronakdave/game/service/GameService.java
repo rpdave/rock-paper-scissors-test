@@ -23,13 +23,12 @@ public class GameService {
         
         Player currentPlayer = playerRepository.findById(playerId).orElseThrow();
 
-        int totalPlayed = currentPlayer.getTotalPlayed();
-        int won = currentPlayer.getWon();
-        int lost = currentPlayer.getLost();
-        int draw = currentPlayer.getDraw();
+        int totalPlayed = currentPlayer.getGamesPlayed();
+        int won = currentPlayer.getGamesWon();
+        int lost = currentPlayer.getGamesLost();
+        int draw = currentPlayer.getGamesDraw();
 
         totalPlayed += 1;
-        currentPlayer.setTotalPlayed(totalPlayed);
         
         switch (result) {
             case WIN:
@@ -43,10 +42,10 @@ public class GameService {
                 break;
         }
 
-        currentPlayer.setTotalPlayed(totalPlayed);
-        currentPlayer.setLost(lost);
-        currentPlayer.setDraw(draw);
-        currentPlayer.setWon(won);
+        currentPlayer.setGamesPlayed(totalPlayed);
+        currentPlayer.setGamesLost(lost);
+        currentPlayer.setGamesDraw(draw);
+        currentPlayer.setGamesDraw(won);
 
         currentPlayer = playerRepository.save(currentPlayer);
 

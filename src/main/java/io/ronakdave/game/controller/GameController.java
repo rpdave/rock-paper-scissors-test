@@ -1,6 +1,8 @@
 package io.ronakdave.game.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,22 +21,20 @@ import lombok.RequiredArgsConstructor;
 public class GameController {
     private final GameService gameService;
 
-    @GetMapping("/submit/{playerId}/{playerShape}")
-    public ResponseEntity<GameResultResponse> submit(@PathVariable("playerId") int playerId, @PathVariable("playerShape") String playerShape) {
+    @GetMapping("/submit/{playerShape}")
+    public ResponseEntity<GameResultResponse> submit(@PathVariable("playerShape") String playerShape, Authentication authentication) {
 
         try {
-            Assert.isTrue(playerId > 0, "Invalid player id");
-            Assert.notNull(playerShape, "Submit a player shape");
-            Assert.isTrue(Shape.getShape(playerShape) != null, "Submit a valid player shape");
+            Assert.notNull(playerShape, "submitted shape must not be null");
+            Assert.isTrue(Shape.getShape(playerShape) != null, "shape is not valid, valid shapes are rock, paper, scissors");
         }
         catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new GameResultResponse("Invalid shape provided"));
-        }
-         catch (Exception e) {
             return ResponseEntity.badRequest().body(new GameResultResponse(e.getMessage()));
         }
 
-        GameResultSummary summary = gameService.playRound(Shape.getShape(playerShape), Long.valueOf(playerId));
+
+
+        GameResultSummary summary = gameService.playRound(Shape.getShape(playerShape), authentication.getName());
 
         return  ResponseEntity.ok(new GameResultResponse(summary));
     }

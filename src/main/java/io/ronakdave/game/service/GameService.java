@@ -18,10 +18,10 @@ public class GameService {
     private final RockPaperScissorsGameEngine gameEngine = new RockPaperScissorsGameEngine();
     private final PlayerRepository playerRepository;
 
-    public GameResultSummary playRound(Shape playerShape, Long playerId) throws NoSuchElementException {
+    public GameResultSummary playRound(Shape playerShape, String username) throws NoSuchElementException {
         GameResult result = gameEngine.runEngine(playerShape);
         
-        Player currentPlayer = playerRepository.findById(playerId).orElseThrow();
+        Player currentPlayer = playerRepository.findByUsername(username).orElseThrow();
 
         int totalPlayed = currentPlayer.getGamesPlayed();
         int won = currentPlayer.getGamesWon();

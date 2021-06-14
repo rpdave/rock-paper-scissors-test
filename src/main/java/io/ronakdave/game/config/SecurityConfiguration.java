@@ -21,17 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.userDetailsService(userDetailsService);
-        // auth
-        //     .inMemoryAuthentication()
-        //     .withUser("user")
-        //     .password("$2y$12$pqpmpyjhY5/jpTvBiK5aseQF2cmJ8dnHohmlR07K.r3KbHrXYIqJK") //user
-        //     .roles("USER")
-        //     .and()
-        //     .withUser("admin")
-        //     .password("$2y$12$x3IkjmlnyPQxh8PhneTa4egYs.XT4mI6afVy0K8x9/y0R..OTn4me") //admin
-        //     .roles("ADMIN");
     }
 
     @Override
@@ -40,10 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/welcome").permitAll()
             .antMatchers("/api/game/**").hasRole("USER")
-            .antMatchers("/api/player/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-            .formLogin();
+            .antMatchers("/api/player/**").hasRole("ADMIN").and()
+            .httpBasic();
     }
 
     @Bean

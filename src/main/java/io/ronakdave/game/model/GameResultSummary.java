@@ -12,4 +12,5 @@ public class GameResultSummary {
     private int won;
     private int lost;
     private int draw;
+    private String gameResult;
 }

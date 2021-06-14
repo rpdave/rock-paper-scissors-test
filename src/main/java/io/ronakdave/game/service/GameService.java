@@ -1,12 +1,10 @@
 package io.ronakdave.game.service;
 
-import java.util.NoSuchElementException;
-
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import io.ronakdave.game.engine.GameEngineOutcome;
 import io.ronakdave.game.engine.RockPaperScissorsGameEngine;
-import io.ronakdave.game.model.GameResult;
 import io.ronakdave.game.model.GameResultSummary;
 import io.ronakdave.game.model.Player;
 import io.ronakdave.game.model.Shape;
@@ -20,7 +18,9 @@ public class GameService {
     private final PlayerRepository playerRepository;
 
     public GameResultSummary playRound(Shape playerShape, String username) {
-        GameResult result = gameEngine.runEngine(playerShape);
+        String gameCommentary = username + " played " + playerShape.name();
+        GameEngineOutcome result = gameEngine.runEngine(playerShape);
+        gameCommentary = gameCommentary +", The computer has played " + result.getGeneratedShape().name();
         
         Player currentPlayer = playerRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
 
@@ -31,14 +31,17 @@ public class GameService {
 
         totalPlayed += 1;
         
-        switch (result) {
+        switch (result.getResult()) {
             case WIN:
+                gameCommentary += ", The player wins!! Human brains are still superior!!";
                 won += 1;
                 break;
             case LOSS:
+                gameCommentary += ", The computer wins!! The machines are taking over!!";
                 lost += 1;
                 break;
             case DRAW:
+                gameCommentary += ", What a close match up! its a draw!";
                 draw += 1;
                 break;
         }
@@ -51,7 +54,8 @@ public class GameService {
         currentPlayer = playerRepository.save(currentPlayer);
 
         return GameResultSummary.builder()
-            .result(result)
+            .gameResult(gameCommentary)
+            .result(result.getResult())
             .player(currentPlayer)
             .played(totalPlayed)
             .won(won)

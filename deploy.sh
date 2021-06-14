@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Clean and build the application jar
+# Clean and build the application jar, will also run tests
 # build the docker image
 # finally run docker-compose, because we have not specified the file it will automatically pickup docker-compose.yml which is the prod stack
 ./gradlew clean build jar && \

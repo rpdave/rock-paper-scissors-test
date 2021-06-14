@@ -45,7 +45,7 @@ public class GameService {
         currentPlayer.setGamesPlayed(totalPlayed);
         currentPlayer.setGamesLost(lost);
         currentPlayer.setGamesDraw(draw);
-        currentPlayer.setGamesDraw(won);
+        currentPlayer.setGamesWon(won);
 
         currentPlayer = playerRepository.save(currentPlayer);
 

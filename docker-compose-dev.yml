@@ -1,0 +1,17 @@
+version: '3.1'
+
+services: 
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8085:8080
+    db:
+        image: mysql:5.7
+        ports: 
+            - "3306:3306"
+        environment: 
+            MYSQL_ROOT_PASSWORD: kkLVpKKy5
+            MYSQL_DATABASE: game
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
